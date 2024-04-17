@@ -6,9 +6,21 @@ def print_seznam(element):
         print(f"Tady mate neše zboži pod čislem {x+1} - {zbozi[x]}")
 
 def kosik_pridavame(zbozi, cislo_produktu, kosik):
-    kosik.append(zbozi[cislo_produktu])
-    zbozi.pop(cislo_produktu)
-    print(f"{zbozi} byla přidána do košíku")
+    if vyber.isdigit():  # Kontrola, zda je vstup číslo
+        cislo_produktu = int(vyber) - 1
+        if cislo_produktu < len(zbozi):
+            kosik.append(zbozi[cislo_produktu])
+            zbozi.pop(cislo_produktu)
+            print(f"{kosik[-1]} byla přidána do košíku")
+        else:
+            print("Neplatná volba. Zadejte prosím platné číslo!")
+    else:  # Pokud není vstup číslo, předpokládáme, že je to název produktu
+        if vyber in zbozi:
+            kosik.append(vyber)
+            zbozi.remove(vyber)
+            print(f"{vyber} byla přidána do košíku")
+        else:
+            print("Neplatná volba. Zadejte prosím platný název produktu.")
 
 while True:
     print (" ")
@@ -40,5 +52,4 @@ while True:
     elif vyber == "konec":
         break
 
-    cislo_produktu = int(vyber) - 1
-    kosik_pridavame(zbozi, cislo_produktu, kosik) if 0 <= cislo_produktu < len(zbozi) else print("Neplatná volba. Zadejte prosím platné číslo!")
+    kosik_pridavame(zbozi, vyber, kosik)
